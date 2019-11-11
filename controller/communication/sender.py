@@ -1,5 +1,5 @@
 from socket import *
-
+import pickle
 
 class ControlDataSender:
     PORT = 14529
@@ -13,6 +13,8 @@ class ControlDataSender:
         self.connect_sock, self.cl_addr = self.server_sock.accept()
 
     def SendControlData(self, datas):
-        send_data = f'{datas[x]}/{datas[y]}/{datas[led_on_off]}'
-        self.connect_sock.send(send_data.encode('UTF-8'))
+        send_data = pickle.dumps(datas)
+        self.connect_sock.send(send_data)
+
+
 
