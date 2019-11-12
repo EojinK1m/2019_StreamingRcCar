@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, Response
 from camera import Camera
+import threading
 
 app = Flask(__name__)
 
@@ -19,5 +20,8 @@ def video_feed():
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, threaded=True)
+    threading.Thread(app.run, host='0.0.0.0', debug=True, threaded=True).start()
+    #app.run(host='0.0.0.0', debug=True, threaded=True)
