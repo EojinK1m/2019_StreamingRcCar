@@ -19,3 +19,6 @@ class ControlReceiver:
 
     def __init__(self, ip):
         self.socket = ReceiverSocket(ip)
+
+    def getData(self):
+        return self.socket.receive()
