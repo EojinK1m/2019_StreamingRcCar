@@ -1,5 +1,5 @@
 import socket
-import string
+import pickle
 
 class ReceiverSocket:
     PORT = 14529
@@ -13,23 +13,9 @@ class ReceiverSocket:
         res = self.sock.recv(self.BUFFER_SIZE)
         if len(res) == 0:
             return None
-        return res.decode()
+        return pickle.loads(res)
 
+class ControlReceiver:
 
-class ControlData():
-    def __init__(self, led_on_off, xposition, yposition):
-        self.led_on_off = led_on_off
-        self.xposition = xposition
-        self.yposition = yposition
-
-
-class StringConverter():
-    @staticmethod
-    def to_control_data(datas):
-        data = "adfs"
-        #data.split('/')
-        
-
-# class ControlReceive():
-
-#     def __init__(self):
+    def __init__(self, ip):
+        self.socket = ReceiverSocket(ip)
