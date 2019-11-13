@@ -1,8 +1,5 @@
 import wiringpi
 
-xpos = 800
-ypos = 800
-
 state = 1
 
 STOP = 0
@@ -26,12 +23,15 @@ IN2 = 23
 IN3 = 22
 IN4 = 21
 
+speed1 = 150
+speed2 = 150
+
 def setPinConfig(EN, INA , INB):
     wiringpi.pinMode(EN, OUTPUT)
     wiringpi.pinMode(INA, OUTPUT)
     wiringpi.pinMode(INB, OUTPUT)
     wiringpi.softPwmCreate(EN, 0, 255)
-def setMotorContorl(PWM, INA, INB, speed, stat):
+def setMotorControl(PWM, INA, INB, speed, stat):
     wiringpi.softPwmWrite(PWM, speed)
 
     if stat == FORWARD:
@@ -43,23 +43,43 @@ def setMotorContorl(PWM, INA, INB, speed, stat):
     elif stat == STOP:
         wiringpi.digitalWrite(INA, LOW)
         wiringpi.digitalWrite(INB, LOW)
-def setMotor(chh, speed, stat):
+
+def setMotor(ch, speed, stat):
     if ch == CH1:
         setMotorControl(ENA, IN1, IN2, speed, stat)
     else:
         setMotorControl(ENB, IN3, IN4, speed, stat)
 
-wiringpi.wiringPiSetup()
-speed1 = 150
-speed2 = 150
 
-setPinConfig(ENA, IN1, IN2)
-setPinConfig(ENB, IN3, IN4)
+def setupMotor():
+    global speed1
+    global speed2
+    wiringpi.wiringPiSetup()
+    speed1 = 150
+    speed2 = 150
 
-while True:
+    setPinConfig(ENA, IN1, IN2)
+    setPinConfig(ENB, IN3, IN4)
+
+def runMotor(control_data):
+    if control_data == None:
+        return
+
+    global FORWARD
+    global BACKWARD
+    global STOP
+
+    global CH1
+    global CH2
+    
+    global speed1
+    global speed2
+
+    xpos = control_data['X']
+    ypos = control_data['Y']
+
     setMotor(CH1, speed1, FORWARD)
     setMotor(CH2, speed1, FORWARD)
-
 
     if xpos < 600 and xpos > 500 and ypos < 600 and ypos > 500:
         setMotor(CH1, speed1, STOP)
