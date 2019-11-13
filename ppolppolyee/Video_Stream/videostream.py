@@ -5,6 +5,7 @@ import threading
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -23,6 +24,8 @@ def video_feed():
 def FlaskRun():
     app.run(host='0.0.0.0', debug=True, threaded=True)
 
+def VideoStreamingStart():
+    threading.Thread(FlaskRun).start()
 
 if __name__ == '__main__':
     threading.Thread(FlaskRun).start()
