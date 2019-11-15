@@ -7,9 +7,15 @@ def serial_communicater():
     
     while True:
         for key in datas.keys():
-            datas[key]= ser.readline()
-
+            temp = ser.readline()
+          #  temp = temp[:-2]
+            temp = temp.decode('UTF-8')
+		
+            datas[key] = int(temp)
+       
         yield datas
 
 if __name__ == '__main__':
-    serial_communicating()
+    a = serial_communicater()
+    while True:
+        print(next(a))
