@@ -12,6 +12,7 @@ class ControlDataSender:
     def WaitConnection(self):
         self.connect_sock, self.cl_addr = self.server_sock.accept()
 
+
     def SendControlData(self, datas):
         send_data = pickle.dumps(datas)
         self.connect_sock.send(send_data)
