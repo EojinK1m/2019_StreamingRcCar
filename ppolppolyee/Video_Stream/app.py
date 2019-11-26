@@ -1,9 +1,9 @@
-from importlib import import_module #import 라는 모듈의 import_module이라는 함수 사용
-from flask import Flask, render_template, Response#Flask
-import os#OS 모듈은 환경 변수나 디렉터리, 파일 등의 OS 자원을 제어할 수 있게 해주는 모듈이다.
+from importlib import import_module
+from flask import Flask, render_template, Response
+import os
 
-if os.environ.get('CAMERA'): #카메라 모듈의 환경 변수나, 디렉터리, 파일 등의 정보를 받아온다
-    Camera = import_module('camera_' + os.environ['CAMERA']).Camera#임포트하고 싶은 모듈을 변수명으로 사용하는 코드
+if os.environ.get('CAMERA'):
+    Camera = import_module('camera_' + os.environ['CAMERA']).Camera
 else:
     from camera import Camera
 
