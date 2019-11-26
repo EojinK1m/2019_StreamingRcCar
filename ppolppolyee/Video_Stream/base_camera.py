@@ -33,7 +33,6 @@ class CameraEvent(object):
             del self.events[remove]
 
     def clear(self):
-        """Invoked from each client's thread after a frame was processed."""
         self.events[get_ident()][0].clear()
 
 class BaseCamera(object):
